@@ -1,0 +1,60 @@
+{% extends "adminparent.html" %}
+{% block body %}
+
+<script>
+    function validate()
+    {
+        var subject=document.getElementById('subject');
+        var details=document.getElementById('details');
+
+        if (subject.value=="" || subject.value==null)
+        {
+            alert('Please Enter Subject');
+            subject.focus()
+        }
+        else if (details=="" || details==null)
+        {
+            alert('Pleease write something in news and events');
+            details.focus()
+        }
+        else
+        {
+            document.getElementById("sendnews").submit();
+        }
+    }
+</script>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+           {% endfor %}
+           {% endif %}
+            <h1 style="text-align:center; color: black; font-family: cursive;">News and Events</h1>   
+            <form class="form-group" action="{% url 'adminapp:newsandevents' %}" method="post" id="sendnews">
+                {% csrf_token %}
+                <table class="table table-bordered" style="margin: 50px 20px; padding: 10px;">  
+                    <tr>
+                        <td>Enter Subject</td>
+                        <td><input type="text" name="subject" class="form-control" style="color: black; background-color: white;" id="subject"/></td>>
+                    </tr>
+                    <tr>
+                        <td>Enter Details </td>
+                        <td><textarea name="details" class="form-control" style="color: black; background-color: white;" id="details"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock body %}
